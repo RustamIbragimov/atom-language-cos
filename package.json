@@ -1,0 +1,9 @@
+{
+  "name": "language-udl",
+  "version": "0.0.1",
+  "description": "Cache Object Script language support in Atom",
+  "engines": {
+    "atom": "*"
+  },
+  "dependencies": {}
+}

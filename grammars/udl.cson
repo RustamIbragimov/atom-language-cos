@@ -1,0 +1,281 @@
+'scopeName': 'source.udl'
+'name': 'Cache Object Script'
+'fileTypes': ['cls']
+'firstLineMatch': '\\s*((?i)Include|Class|///)'
+'patterns': [
+  {
+    'include': '#include-directives'
+  }
+  {
+    'include': '#comments'
+  }
+  {
+    'include': '#classes'
+  }
+  {
+    'include': 'text.xml'
+  }
+]
+
+'repository':
+
+  'include-directives':
+    'begin': '\\s*(#?include)\\s*'
+    'beginCaptures':
+      '1':
+        'name': 'keyword.control.udl'
+    'end': '$'
+    'patterns': [
+      {
+        'include': '#parenthesis-attrs'
+      }
+      {
+        'include': '#class-names'
+      }
+    ]
+
+  'comments':
+    'patterns': [
+      {
+        'include': '#triple-comments'
+      }
+      {
+        'include': '#block-comments'
+      }
+      {
+        'include': '#double-comments'
+      }
+      {
+        'include': '#number-comments'
+      }
+    ]
+
+
+  'classes':
+    'patterns': [
+      {
+        'include': '#class-definitions'
+      }
+      {
+        'include': '#property-definitions'
+      }
+      {
+        'include': '#parameter-definitions'
+      }
+      {
+        'include': '#method-definitions'
+      }
+      {
+        'include': '#index-definitions'
+      }
+      {
+        'include': '#fk-definitions'
+      }
+      {
+        'include': '#keywords'
+      }
+    ]
+
+# Everything for a class
+  'class-definitions':
+    'begin': '^\\s*(?i)(Class)\\s*(\\w+(\\.\\w+)*)'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.type.udl'
+      '2':
+        'name': 'variable.language.udl'
+    'end': '$'
+    'patterns': [
+      {
+        'include': '#extends'
+      }
+      {
+        'include': '#brackets-attrs'
+      }
+    ]
+
+  'property-definitions':
+    'begin': '^\\s*(?i)(Property)\\s*((\\w|\\d)+)'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.type.udl'
+      '2':
+        'name': 'variable.other.udl'
+    'end': '$'
+    'patterns': [
+      {
+        'include': '#as-keywords'
+      }
+      {
+        'include': '#parenthesis-attrs'
+      }
+      {
+        'include': '#class-names'
+      }
+    ]
+
+
+  'method-definitions':
+    'begin': '^\\s*(?i)(Method|ClassMethod)\\s*(\\w+(\\.\\w+)*)'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.function.udl'
+      '2':
+        'name': 'variable.other.udl'
+    'end': '$'
+
+
+  'fk-definitions':
+    'begin': '^\\s*(?i)(Relationship)\\s*((\\w|\\d)+)'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.type.udl'
+      '2':
+        'name': 'variable.other.udl'
+    'end': '$'
+    'patterns': [
+        {
+          'include': '#as-keywords'
+        }
+        {
+          'include': '#brackets-attrs'
+        }
+        {
+          'include': '#class-names'
+        }
+    ]
+
+
+  'index-definitions':
+    'begin': '^\\s*(?i)(Index)\\s*((\\w|\\d)+)\\s*(?i)(On)'
+    'beginCaptures':
+      '1':
+        'name': 'entity.name.type.udl'
+      '2':
+        'name': 'variable.other.udl'
+      '4':
+        'name': 'keyword.operator.udl'
+    'end': '$'
+    'patterns': [
+        {
+          'include': '#brackets-attrs'
+        }
+        {
+          'include': '#parameter-attrs'
+        }
+        {
+          'include': '#class-names'
+        }
+    ]
+
+# Everything for a property definition
+  'as-keywords':
+    'match': '\\b(?i)As\\b'
+    'name': 'keyword.control.udl'
+
+  'parameter-attrs':
+    'begin': '\\('
+    'end': '\\)'
+    'patterns': [
+      {
+        'include': '#props'
+      }
+    ]
+
+
+
+#  Everything for a class definition
+  'extends':
+    'patterns': [
+      {
+        'include': '#extends-keywords'
+      }
+      {
+        'include': '#extends-attrs'
+      }
+    ]
+
+  'extends-keywords':
+    'match': '(?i)Extends'
+    'name': 'storage.modifier.udl'
+
+  'extends-attrs':
+    'patterns': [
+      {
+        'begin': '\\('
+        'end': '\\)'
+        'include': '#class-names'
+      }
+      {
+        'include': '#class-names'
+      }
+    ]
+
+  'brackets-attrs':
+    'begin': '\\['
+    'end': '\\]'
+    'patterns': [
+      {
+        'include': '#props'
+      }
+    ]
+
+# Everything for a comment
+  'triple-comments':
+    'match': '\\s*\\/\\/\\/.*'
+    'name': 'comment.line.character.udl'
+    'comment': '/// comments'
+
+  'block-comments':
+    'begin': '\\/\\*'
+    'end': '\\*\\/'
+    'name': 'comment.block.documentation.udl'
+    'comment': '/* */ comments'
+
+  'double-comments':
+    'match': '\\s*\\/\\/.*'
+    'name': 'comment.line.double-slash.udl'
+    'comment': '// comments'
+
+  'number-comments':
+    'match': '\\s*#;.*'
+    'name': 'comment.line.number.udl'
+
+
+# Generic
+  'class-names':
+    'match': '\\(?((%|\\w|\\.)+)'
+    'captures':
+      '1':
+        'name': 'variable.language.udl'
+
+# TODO: check! probably does not work properly
+  'props':
+    'patterns': [
+      {
+        'match': '((\\w|\\d|"|\\(|\\))+)\\s*=\\s*((\\w|\\d|"|\\(|\\))+)'
+        'captures':
+          '1':
+            'name': 'entity.name.tag.udl'
+          '3':
+            'name': 'entity.name.tag.udl'
+      }
+      {
+        'match': '(\\w|\\d)+'
+        'name': 'entity.name.tag.udl'
+      }
+    ]
+
+
+# Operators
+  'keywords':
+    'patterns': [
+      {
+        'match': '\\s*\\b(?i)(IF|I|WHILE|FOR|F|TRY|CATCH|ELSE|E|ELSEIF)\\b\\s+'
+        'name': 'keyword.control.udl'
+      }
+      {
+        'match': '\\s*\\b(?i)(SET|S|DO|D|KILL|K|GOTO|G|READ|R|WRITE|W|OPEN|O|USE|U|CLOSE|C|CONTINUE|FOR|F|HALT|HANG|H|JOB|J|LOCK|L|MERGE|M|NEW|N|QUIT|Q|RETURN|RET|TSTART|TS|TCOMMIT|TC|TROLLBACK|TR|THROW|VIEW|V|XECUTE|X|ZKILL|ZK|ZNSPACE|ZN|ZTRAP|ZWRITE|ZW|ZZDUMP|ZZWRITE)\\b\\s+'
+        'name': 'keyword.operator.udl'
+      }
+    ]
