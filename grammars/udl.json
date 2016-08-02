@@ -281,6 +281,9 @@
         },
         {
           "include": "#as-keywords"
+        },
+        {
+          "include": "#dotted-attrs"
         }
       ]
     },
@@ -299,6 +302,14 @@
             },
             "3": {
               "name": "variable.language.method-attr.udl"
+            }
+          }
+        },
+        {
+          "match": "(\\w+)",
+          "captures": {
+            "1": {
+              "name": "variable.language.method-param.udl"
             }
           }
         }
@@ -378,6 +389,28 @@
         {
           "match": "\\$\\$\\$\\w+",
           "name": "variable.other.macros.udl"
+        },
+        {
+          "include": "#strings"
+        }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        {
+          "begin": "(\")",
+          "beginCaptures": {
+            "1": {
+              "name": "punctuation.definition.string.begin.udl"
+            }
+          },
+          "end": "(\")",
+          "endCaptures": {
+            "1": {
+              "name": "punctuation.definition.string.end.udl"
+            }
+          },
+          "name": "string.quoted.double.udl"
         }
       ]
     }

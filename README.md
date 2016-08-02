@@ -1,1 +1,1 @@
-# language-cos
+# Cache Object Script Atom Package
