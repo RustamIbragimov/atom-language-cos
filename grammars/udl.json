@@ -1,7 +1,7 @@
 {
   "name": "source.udl",
   "scopeName": "Cache Object Script",
-  "fileTypes": ["cls"],
+  "fileTypes": ["cls", "mac"],
   "patterns": [
     {
       "include": "#comments"
@@ -111,7 +111,7 @@
       ]
     },
     "dotted-attrs": {
-      "match": "((%|\\w|\\.)+)",
+      "match": "((%|\\w|\\.|#)+)",
       "captures": {
         "1": {
           "name": "variable.language.udl"
@@ -137,6 +137,9 @@
         },
         {
           "include": "#methods"
+        },
+        {
+          "include": "#xml-data"
         },
         {
           "include": "#keywords"
@@ -261,11 +264,20 @@
         },
         {
           "include": "#dotted-attrs"
+        },
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "#statements"
+            }
+          ]
         }
       ]
     },
     "methods": {
-      "begin": "^\\s*(?i)(Method|ClassMethod)\\s+(\\w+)",
+      "begin": "^\\s*(?i)(Method|ClassMethod|ClientMethod)\\s+(\\w+)",
       "beginCaptures": {
         "1": {
           "name": "entity.name.type.property.udl"
@@ -284,6 +296,15 @@
         },
         {
           "include": "#dotted-attrs"
+        },
+        {
+          "begin": "\\{",
+          "end": "\\}",
+          "patterns": [
+            {
+              "include": "#statements"
+            }
+          ]
         }
       ]
     },
@@ -295,13 +316,13 @@
           "match": "(\\w+)\\s*(As)\\s*((\\w|%|\\.)+)",
           "captures": {
             "1": {
-              "name": "variable.language.method-param.udl"
+              "name": "variable.parameter.method-param.udl"
             },
             "2": {
               "name": "keyword.operator.as-method-param.udl"
             },
             "3": {
-              "name": "variable.language.method-attr.udl"
+              "name": "storage.type.method.udl"
             }
           }
         },
@@ -309,7 +330,7 @@
           "match": "(\\w+)",
           "captures": {
             "1": {
-              "name": "variable.language.method-param.udl"
+              "name": "variable.parameter.method-param.udl"
             }
           }
         }
@@ -362,6 +383,11 @@
         }
       },
       "end": "\\)",
+      "patterns": [
+        {
+          "include": "#expressions"
+        }
+      ],
       "comment": "TODO: put sql syntax into ()"
     },
     "class-keyword": {
@@ -411,6 +437,37 @@
             }
           },
           "name": "string.quoted.double.udl"
+        }
+      ]
+    },
+    "xml-data": {
+      "patterns": [
+        {
+          "match": "^\\s*(?i)(XData|Storage)\\s+(\\w+)",
+          "captures": {
+            "1": {
+              "name": "storage.type.xdata.udl"
+            },
+            "2": {
+              "name": "variable.other.udl"
+            }
+          }
+        }
+      ]
+    },
+    "expressions": {
+      "patterns": [
+        {
+          "begin": "\\(",
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#expressions"
+            }
+          ]
+        },
+        {
+          "include": "source.sql"
         }
       ]
     }

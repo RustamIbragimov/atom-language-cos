@@ -1,0 +1,6 @@
+ read "Team: ", t
+ if ( t = "METS" ) {
+     write !, "Go METS!" }
+ else {
+     write !, "Boo ", t, "!" }
+ quit

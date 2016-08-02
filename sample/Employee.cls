@@ -37,7 +37,7 @@ Method PrintPerson(fileName As %String, totoo As Systems.ABC)
 /// the purpose of this method is to prove that Picture really contains an image
 Method WritePicture()
 {
-	if (..Picture="") { quit }
+	if (..Picture="") {quit}
 	set name=$TR(..Name,".") ; strip off trailing period
 	set name=$TR(name,", ","__") ; replace commas and spaces
 	set filename=name_".png" // here is another comment
@@ -53,7 +53,7 @@ Method WritePicture()
 	*/
 
 
-	&sql(SELECT COUNT() from Table WHERE ABC )
+	&sql(SELECT () ABC from Table WHERE ABC)
 	$system.Status.OBJ("daf")
 
 	set file=##class(%Stream.FileBinary).%New()
