@@ -1,4 +1,5 @@
 include (MyMacros, YourMacros)
+#define ABC DE
 /// This sample persistent class represents an employee.<br>
 Class Sample.Employee Extends (%Persistent, %Populate) [ Hidden, StorageStrategy = AddressState ]
 {
@@ -24,9 +25,10 @@ Index NameIndex ON (LastName,FirstName) [ Unique ];
 /// This method overrides the method in <class>Person</class>.<br>
 /// Prints the properties <property>Name</property> and <property>Title</property>
 /// to the console.
-Method PrintPerson(fileName As %String, totoo As Systems)
+Method PrintPerson(fileName As %String, totoo As Systems.ABC)
 {
 	#include ABC
+	set ..#hello = "123"
 	Write !,"Name: ", ..Name, ?30, "Title: ", ..Title
 	Quit
 }
@@ -41,6 +43,8 @@ Method WritePicture()
 	set filename=name_".png" // here is another comment
 	// here is a comment
 
+	set ^Storage(121) = "dasf"
+
 	#; here is another one
 
 	/*
@@ -48,11 +52,16 @@ Method WritePicture()
 	*
 	*/
 
+
+	&sql(SELECT COUNT() from Table WHERE ABC )
+	$system.Status.OBJ("daf")
+
 	set file=##class(%Stream.FileBinary).%New()
 	set file.Filename=filename
 	do file.CopyFrom(..Picture)
 	do file.%Save()
 	write !, "Generated file: "_filename
+	return $$$OK
 }
 
 Storage Default

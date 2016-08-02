@@ -1,0 +1,385 @@
+{
+  "name": "source.udl",
+  "scopeName": "Cache Object Script",
+  "fileTypes": ["cls"],
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#directives"
+    },
+    {
+      "include": "#statements"
+    },
+    {
+      "include": "text.xml"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "begin": "\\s*\\/\\/\\/",
+          "end": "$",
+          "name": "comment.line.character.udl",
+          "patterns": [
+            {
+              "include": "text.xml"
+            }
+          ]
+        },
+        {
+          "begin": "\\s*\\/\\/",
+          "end": "$",
+          "name": "comment.line.double-slash.udl",
+          "patterns": [
+            {
+              "include": "text.xml"
+            }
+          ]
+        },
+        {
+          "begin": "\\s*#;",
+          "end": "$",
+          "name": "comment.line.number.udl",
+          "patterns": [
+            {
+              "include": "text.xml"
+            }
+          ]
+        },
+        {
+          "begin": "\\/\\*",
+          "end": "\\*\\/",
+          "name": "comment.block.documentation.udl",
+          "patterns": [
+            {
+              "include": "text.xml"
+            }
+          ]
+        },
+        {
+          "begin": ";",
+          "end": "$",
+          "name": "comment.line.semicolon.udl",
+          "patterns": [
+            {
+              "include": "text.xml"
+            }
+          ]
+        }
+      ]
+    },
+    "directives": {
+      "patterns": [
+        {
+          "include": "#include-directives"
+        },
+        {
+          "include": "#define-directives"
+        }
+      ]
+    },
+    "include-directives": {
+      "begin": "\\s*(?i)(#?include)\\s*",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.include.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#dotted-attrs"
+        }
+      ]
+    },
+    "define-directives": {
+      "begin": "^\\s*(?i)(#define)\\s*",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.other.define.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "match": "[a-zA-Z0-9%\\(\\)+\\-*=]+",
+          "name": "constant.character.macros.udl"
+        }
+      ]
+    },
+    "dotted-attrs": {
+      "match": "((%|\\w|\\.)+)",
+      "captures": {
+        "1": {
+          "name": "variable.language.udl"
+        }
+      }
+    },
+    "statements": {
+      "patterns": [
+        {
+          "include": "#properties"
+        },
+        {
+          "include": "#parameters"
+        },
+        {
+          "include": "#indices"
+        },
+        {
+          "include": "#fks"
+        },
+        {
+          "include": "#classes"
+        },
+        {
+          "include": "#methods"
+        },
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#variables"
+        }
+      ]
+    },
+    "properties": {
+      "begin": "^\\s*(?i)(Property)\\s+(\\w+)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.property.udl"
+        },
+        "2": {
+          "name": "variable.other.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#as-keywords"
+        },
+        {
+          "include": "#dotted-attrs"
+        }
+      ]
+    },
+    "parameters": {
+      "begin": "^\\s*(?i)(Parameter)\\s+(\\w+)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.property.udl"
+        },
+        "2": {
+          "name": "variable.other.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#as-keywords"
+        },
+        {
+          "include": "#dotted-attrs"
+        }
+      ]
+    },
+    "indices": {
+      "begin": "^\\s*(?i)(Index)\\s+(\\w+)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.property.udl"
+        },
+        "2": {
+          "name": "variable.other.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "match": "\\b(?i)(ON)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.on.udl"
+            }
+          }
+        },
+        {
+          "include": "#dotted-attrs"
+        }
+      ]
+    },
+    "fks": {
+      "begin": "^\\s*(?i)(Relationship)\\s+(\\w+)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.property.udl"
+        },
+        "2": {
+          "name": "variable.other.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#as-keywords"
+        },
+        {
+          "include": "#dotted-attrs"
+        }
+      ]
+    },
+    "as-keywords": {
+      "match": "\\b(?i)(As)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.as.udl"
+        }
+      }
+    },
+    "classes": {
+      "begin": "^\\s*(?i)(Class)\\s+(\\w+)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.property.udl"
+        },
+        "2": {
+          "name": "variable.other.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "match": "\\b(?i)(Extends)\\b",
+          "captures": {
+            "1": {
+              "name": "keyword.operator.extends.udl"
+            }
+          }
+        },
+        {
+          "include": "#dotted-attrs"
+        }
+      ]
+    },
+    "methods": {
+      "begin": "^\\s*(?i)(Method|ClassMethod)\\s+(\\w+)",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.type.property.udl"
+        },
+        "2": {
+          "name": "variable.other.udl"
+        }
+      },
+      "end": "$",
+      "patterns": [
+        {
+          "include": "#method-params"
+        },
+        {
+          "include": "#as-keywords"
+        }
+      ]
+    },
+    "method-params": {
+      "begin": "\\(",
+      "end": "\\)",
+      "patterns": [
+        {
+          "match": "(\\w+)\\s*(As)\\s*((\\w|%|\\.)+)",
+          "captures": {
+            "1": {
+              "name": "variable.language.method-param.udl"
+            },
+            "2": {
+              "name": "keyword.operator.as-method-param.udl"
+            },
+            "3": {
+              "name": "variable.language.method-attr.udl"
+            }
+          }
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "include": "#action-keywords"
+        },
+        {
+          "include": "#control-keywords"
+        },
+        {
+          "include": "#system-functions"
+        },
+        {
+          "include": "#sql-keyword"
+        },
+        {
+          "include": "#class-keyword"
+        }
+      ]
+    },
+    "action-keywords": {
+      "match": "(?i)\\b(SET|S|DO|D|KILL|K|GOTO|G|READ|R|WRITE|W|OPEN|O|USE|U|CLOSE|C|CONTINUE|FOR|F|HALT|HANG|H|JOB|J|LOCK|L|MERGE|M|NEW|N|QUIT|Q|RETURN|RET|TSTART|TS|TCOMMIT|TC|TROLLBACK|TR|THROW|VIEW|V|XECUTE|X|ZKILL|ZK|ZNSPACE|ZN|ZTRAP|ZWRITE|ZW|ZZDUMP|ZZWRITE)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.operator.action.udl"
+        }
+      }
+    },
+    "control-keywords": {
+      "match": "(?i)\\b(if|i|while|for|f|try|catch|else|e|elseif)\\b",
+      "captures": {
+        "1": {
+          "name": "keyword.control.udl"
+        }
+      }
+    },
+    "system-functions": {
+      "match": "\\.%\\w+",
+      "name": "entity.name.function.system.udl"
+    },
+    "sql-keyword": {
+      "begin": "(&sql)\\(",
+      "beginCaptures": {
+        "1": {
+          "name": "entity.name.function.sql.udl"
+        }
+      },
+      "end": "\\)",
+      "comment": "TODO: put sql syntax into ()"
+    },
+    "class-keyword": {
+      "match": "##class",
+      "name": "entity.name.class.reference.udl"
+    },
+    "variables": {
+      "patterns": [
+        {
+          "match": "\\.\\.\\w+",
+          "name": "variable.other.property.udl"
+        },
+        {
+          "match": "\\.\\.#\\w+",
+          "name": "variable.other.parameter.udl"
+        },
+        {
+          "match": "\\^\\w+",
+          "name": "variable.other.global.udl"
+        },
+        {
+          "match": "\\$\\w+(\\.\\w+)*",
+          "name": "variable.other.system.udl"
+        },
+        {
+          "match": "\\$\\$\\$\\w+",
+          "name": "variable.other.macros.udl"
+        }
+      ]
+    }
+  }
+}
