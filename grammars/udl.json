@@ -96,17 +96,87 @@
       ]
     },
     "define-directives": {
-      "begin": "^\\s*(?i)(#define)\\s*",
-      "beginCaptures": {
-        "1": {
-          "name": "keyword.other.define.udl"
-        }
-      },
-      "end": "$",
       "patterns": [
         {
-          "match": "[a-zA-Z0-9%\\(\\)+\\-*=]+",
-          "name": "constant.character.macros.udl"
+          "begin": "^\\s*(?i)(#define)\\s*",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.define.udl"
+            }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "[a-zA-Z0-9%\\(\\)+\\-*=]+",
+              "name": "constant.other.macros.udl"
+            }
+          ]
+        },
+        {
+          "begin": "^\\s*(?i)(#ifdef)\\s*(\\w+)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.ifdef.udl"
+            },
+            "2": {
+              "name": "constant.other.ifdef.udl"
+            }
+          },
+          "end": "$"
+        },
+        {
+          "match": "^\\s*(?i)(#else|#endif)",
+          "captures": {
+            "1": {
+              "name": "keyword.other.else-endif.udl"
+            }
+          }
+        },
+        {
+          "begin": "^\\s*(?i)(#dim)\\s*(\\w+)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.other.dim.udl"
+            },
+            "2": {
+              "name": "variable.other.udl"
+            }
+          },
+          "end": "$",
+          "patterns": [
+            {
+              "match": "=\\s*(\\w+)",
+              "name": "entity.name.variable.equals.udl"
+            },
+            {
+              "match": "(?i)\\b(as)\\b\\s*\\b(list|array)\\b\\s*\\b(of)\\b\\s*\\b(\\w+)\\b",
+              "captures": {
+                "1": {
+                  "name": "keyword.operator.as.udl"
+                },
+                "2": {
+                  "name": "entity.name.variable.list-array.udl"
+                },
+                "3": {
+                  "name": "keyword.operator.of.udl"
+                },
+                "4": {
+                  "name": "entity.name.variable.udl"
+                }
+              }
+            },
+            {
+              "match": "(?i)\\b(as)\\b\\s*\\b(\\w+)\\b",
+              "captures": {
+                "1": {
+                  "name": "keyword.operator.as.udl"
+                },
+                "2": {
+                  "name" : "entity.name.variable.udl"
+                }
+              }
+            }
+          ]
         }
       ]
     },

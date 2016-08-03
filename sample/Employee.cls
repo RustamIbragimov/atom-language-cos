@@ -1,5 +1,15 @@
 include (MyMacros, YourMacros)
 #define ABC DE
+#define Unicode
+
+#IfDef Unicode
+	//dsafdskflals;d
+#Else
+	//dafdsafas
+#EndIf
+
+
+
 /// This sample persistent class represents an employee.<br>
 Class Sample.Employee Extends (%Persistent, %Populate) [ Hidden, StorageStrategy = AddressState ]
 {
@@ -37,6 +47,11 @@ Method PrintPerson(fileName As %String, totoo As Systems.ABC)
 /// the purpose of this method is to prove that Picture really contains an image
 Method WritePicture()
 {
+
+	#dim abc As Hello
+	#dim qwe As List Of Hello
+	#dim zxc As Array Of Hello
+
 	if (..Picture="") {quit}
 	set name=$TR(..Name,".") ; strip off trailing period
 	set name=$TR(name,", ","__") ; replace commas and spaces
